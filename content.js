@@ -1,3 +1,6 @@
+// Cross-browser API compatibility
+const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
+
 let favoriterHeart = null;
 
 function createHeartIcon() {
@@ -59,24 +62,30 @@ function getCurrentPageData() {
 }
 
 async function toggleFavorite() {
+  console.log('Heart clicked!');
   const pageData = getCurrentPageData();
-  const result = await chrome.storage.local.get(['favorites']);
+  console.log('Page data:', pageData);
+  const result = await browserAPI.storage.local.get(['favorites']);
   const favorites = result.favorites || {};
+  console.log('Current favorites:', favorites);
   
   if (favorites[pageData.url]) {
     delete favorites[pageData.url];
     favoriterHeart.classList.remove('favoriter-liked');
+    console.log('Removed from favorites');
   } else {
     favorites[pageData.url] = pageData;
     favoriterHeart.classList.add('favoriter-liked');
+    console.log('Added to favorites');
   }
   
-  await chrome.storage.local.set({ favorites });
+  await browserAPI.storage.local.set({ favorites });
+  console.log('Favorites saved:', favorites);
 }
 
 async function updateHeartState() {
   const pageData = getCurrentPageData();
-  const result = await chrome.storage.local.get(['favorites']);
+  const result = await browserAPI.storage.local.get(['favorites']);
   const favorites = result.favorites || {};
   
   if (favorites[pageData.url]) {

@@ -1,12 +1,19 @@
+// Cross-browser API compatibility
+const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
+
 document.addEventListener('DOMContentLoaded', async () => {
   await loadFavorites();
+  await loadDarkMode();
   
   document.getElementById('clearAll').addEventListener('click', clearAllFavorites);
+  document.getElementById('darkModeToggle').addEventListener('click', toggleDarkMode);
 });
 
 async function loadFavorites() {
-  const result = await chrome.storage.local.get(['favorites']);
+  console.log('Loading favorites...');
+  const result = await browserAPI.storage.local.get(['favorites']);
   const favorites = result.favorites || {};
+  console.log('Favorites loaded:', favorites);
   const favoritesList = document.getElementById('favoritesList');
   const countElement = document.querySelector('.count');
   
@@ -88,7 +95,7 @@ async function loadFavorites() {
     item.addEventListener('click', (e) => {
       if (!e.target.classList.contains('remove-btn')) {
         const url = item.dataset.url;
-        chrome.tabs.create({ url });
+        browserAPI.tabs.create({ url });
       }
     });
   });
@@ -117,7 +124,7 @@ async function loadFavorites() {
     item.addEventListener('click', (e) => {
       if (!e.target.classList.contains('remove-btn')) {
         const url = item.dataset.url;
-        chrome.tabs.create({ url });
+        browserAPI.tabs.create({ url });
       }
     });
   });
@@ -132,16 +139,38 @@ async function loadFavorites() {
 }
 
 async function removeFavorite(url) {
-  const result = await chrome.storage.local.get(['favorites']);
+  const result = await browserAPI.storage.local.get(['favorites']);
   const favorites = result.favorites || {};
   delete favorites[url];
-  await chrome.storage.local.set({ favorites });
+  await browserAPI.storage.local.set({ favorites });
   await loadFavorites();
 }
 
 async function clearAllFavorites() {
   if (confirm('Are you sure you want to clear all favorites?')) {
-    await chrome.storage.local.set({ favorites: {} });
+    await browserAPI.storage.local.set({ favorites: {} });
     await loadFavorites();
   }
+}
+
+async function loadDarkMode() {
+  const result = await browserAPI.storage.local.get(['darkMode']);
+  const isDarkMode = result.darkMode || false;
+  
+  if (isDarkMode) {
+    document.body.classList.add('dark-mode');
+    document.getElementById('darkModeToggle').textContent = '☀️';
+  } else {
+    document.body.classList.remove('dark-mode');
+    document.getElementById('darkModeToggle').textContent = '🌙';
+  }
+}
+
+async function toggleDarkMode() {
+  const result = await browserAPI.storage.local.get(['darkMode']);
+  const isDarkMode = result.darkMode || false;
+  const newDarkMode = !isDarkMode;
+  
+  await browserAPI.storage.local.set({ darkMode: newDarkMode });
+  await loadDarkMode();
 }

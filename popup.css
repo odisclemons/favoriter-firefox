@@ -20,11 +20,32 @@ body {
   text-align: center;
 }
 
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
 .header h1 {
-  margin: 0 0 4px 0;
+  margin: 0;
   font-size: 18px;
   font-weight: 600;
   color: #495057;
+}
+
+.dark-mode-toggle {
+  background: none;
+  border: none;
+  font-size: 16px;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 4px;
+  transition: background-color 0.2s;
+}
+
+.dark-mode-toggle:hover {
+  background: rgba(0, 0, 0, 0.1);
 }
 
 .count {
@@ -212,4 +233,99 @@ body {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+/* Dark Mode Styles */
+body.dark-mode {
+  background: #1a1a1a;
+}
+
+.dark-mode .popup-container {
+  background: #1a1a1a;
+}
+
+.dark-mode .header {
+  background: #2d2d2d;
+  border-bottom-color: #404040;
+}
+
+.dark-mode .header h1 {
+  color: #e9ecef;
+}
+
+.dark-mode .count {
+  color: #adb5bd;
+}
+
+.dark-mode .dark-mode-toggle:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.dark-mode .favorites-list {
+  background: #1a1a1a;
+}
+
+.dark-mode .empty-state {
+  color: #adb5bd;
+}
+
+.dark-mode .favorite-item {
+  background: #2d2d2d;
+  border-bottom-color: #404040;
+}
+
+.dark-mode .favorite-item:hover {
+  background: #383838;
+}
+
+.dark-mode .favorite-title {
+  color: #e9ecef;
+}
+
+.dark-mode .favorite-url {
+  color: #adb5bd;
+}
+
+.dark-mode .domain-header {
+  background: #383838;
+  border-bottom-color: #404040;
+}
+
+.dark-mode .domain-header:hover {
+  background: #404040;
+}
+
+.dark-mode .submenu {
+  background: #2d2d2d;
+}
+
+.dark-mode .submenu-item {
+  background: #2d2d2d;
+  border-bottom-color: #383838;
+}
+
+.dark-mode .submenu-item:hover {
+  background: #383838;
+}
+
+.dark-mode .submenu-item .favorite-title {
+  color: #e9ecef;
+}
+
+.dark-mode .submenu-item .favorite-url {
+  color: #adb5bd;
+}
+
+.dark-mode .footer {
+  background: #2d2d2d;
+  border-top-color: #404040;
+}
+
+.dark-mode .clear-btn {
+  background: #dc3545;
+  color: white;
+}
+
+.dark-mode .clear-btn:hover {
+  background: #c82333;
 }

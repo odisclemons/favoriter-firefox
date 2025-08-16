@@ -1,8 +1,11 @@
-chrome.runtime.onInstalled.addListener(() => {
-  chrome.storage.local.set({ favorites: {} });
+// Cross-browser API compatibility
+const browserAPI = typeof browser !== 'undefined' ? browser : chrome;
+
+browserAPI.runtime.onInstalled.addListener(() => {
+  browserAPI.storage.local.set({ favorites: {} });
 });
 
-chrome.storage.onChanged.addListener((changes, area) => {
+browserAPI.storage.onChanged.addListener((changes, area) => {
   if (area === 'local' && changes.favorites) {
     console.log('Favorites updated');
   }
