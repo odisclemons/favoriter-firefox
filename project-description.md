@@ -1,0 +1,3 @@
+<idea>
+Chrome extension called favoriter.  This chrome extension should create a heart icon overlayed on every web page that will be highlighted when the user clicks it.  We will call this action liking a web page.  This will add this page to a extension's menu and will allow a user to open their favorite websites in a new tab.  clicking the heart icon again will remove the website from the list and the heart icon will no longer be visually highlighted.   Think hard, answer in short.
+</idea>
